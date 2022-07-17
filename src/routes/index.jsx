@@ -1,6 +1,6 @@
 
-import Index from "../container/Index/index.jsx";
-import About from "../container/About/index.jsx";
+import Index from "@/container/Index";
+import About from "@/container/About";
 
 
 export default [

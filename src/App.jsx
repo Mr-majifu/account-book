@@ -1,7 +1,7 @@
 
 
 import { useRoutes } from "react-router-dom";
-import routes from "./routes";
+import routes from "@/routes";
 import { ConfigProvider, Button } from 'zarm';
 import zhCN from 'zarm/lib/config-provider/locale/zh_CN';
 import 'zarm/dist/zarm.css';
