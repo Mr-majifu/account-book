@@ -20,12 +20,52 @@
 
 
 
-import { useEffect, useMemo, useState } from "react";
 
-const Child = ({data}) => {
+
+
+// import { useEffect, useMemo, useState } from "react";
+
+// const Child = ({data}) => {
+//   useEffect(() => {
+//     console.log("查询条件", data);
+//   },[data])
+
+//   return <div>子组件</div>
+// }
+
+// const App = () => {
+//   const [name, setName] = useState("")
+//   const [phone, setPhone] = useState("")
+//   const [kw, setKw] = useState("")
+
+//   const data = useMemo(() => ({
+//     name,
+//     phone
+//   }), [name, phone])
+
+//   return (
+//     <div className="App">
+//       <input type="text" onChange={(e) => setName(e.target.value)} placeholder="请输入姓名" />
+//       <input type="text" onChange={(e) => setPhone(e.target.value)} placeholder="请输入电话" />
+//       <input type="text" onChange={(e) => setKw(e.target.value)} placeholder="请输入关键词" />
+//       <Child data={data} />
+//     </div>
+//   )
+// }
+
+// export default App;
+
+
+
+
+
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+const Child = ({callback}) => {
   useEffect(() => {
-    console.log("查询条件", data);
-  },[data])
+    callback()
+  },[callback])
 
   return <div>子组件</div>
 }
@@ -35,17 +75,16 @@ const App = () => {
   const [phone, setPhone] = useState("")
   const [kw, setKw] = useState("")
 
-  const data = useMemo(() => ({
-    name,
-    phone
-  }), [name, phone])
+  const callback = useCallback(() => {
+    console.log("我是callback");
+  },[name])
 
   return (
     <div className="App">
       <input type="text" onChange={(e) => setName(e.target.value)} placeholder="请输入姓名" />
       <input type="text" onChange={(e) => setPhone(e.target.value)} placeholder="请输入电话" />
       <input type="text" onChange={(e) => setKw(e.target.value)} placeholder="请输入关键词" />
-      <Child data={data} />
+      <Child callback={callback} />
     </div>
   )
 }
