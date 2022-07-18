@@ -5,7 +5,8 @@ import { Toast } from "zarm"
 
 const MODE = import.meta.env.MODE  // 环境变量
 
-axios.defaults.baseURL = MODE == 'development' ? '/api' : 'http://api.chennick.wang'
+// axios.defaults.baseURL = MODE == 'development' ? '/api' : 'http://api.chennick.wang'
+axios.defaults.baseURL = 'http://api.chennick.wang'
 // 允许跨域携带cookie信息
 axios.defaults.withCredentials = true
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
