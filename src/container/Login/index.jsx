@@ -47,7 +47,7 @@ const Login = () => {
   }
 
   return (
-    <div className={s.auto}>
+    <div className={s.auth}>
 
       <div className={s.head} />
 

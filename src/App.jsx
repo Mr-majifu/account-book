@@ -3,8 +3,8 @@
 import { useRoutes } from "react-router-dom";
 import routes from "@/routes";
 import { ConfigProvider } from 'zarm';
-import zhCN from 'zarm/lib/config-provider/locale/zh_CN';
-import 'zarm/dist/zarm.css';
+// import zhCN from 'zarm/lib/config-provider/locale/zh_CN';
+// import 'zarm/dist/zarm.css';
 
 import NavBar from "@/components/NavBar";
 import { useEffect, useState } from "react";
@@ -21,7 +21,7 @@ const App = () => {
   }, [pathname])
 
   return (
-    <ConfigProvider primaryColor={'#007fff'} locale={zhCN}>
+    <ConfigProvider primaryColor={'#007fff'}>
       <div>
         {element}
         <NavBar showNav={showNav}>

@@ -60,34 +60,34 @@
 
 
 
-// useCallback
-import { useCallback, useEffect, useMemo, useState } from "react";
+// // useCallback
+// import { useCallback, useEffect, useMemo, useState } from "react";
 
-const Child = ({callback}) => {
-  useEffect(() => {
-    callback()
-  },[callback])
+// const Child = ({callback}) => {
+//   useEffect(() => {
+//     callback()
+//   },[callback])
 
-  return <div>子组件</div>
-}
+//   return <div>子组件</div>
+// }
 
-const App = () => {
-  const [name, setName] = useState("")
-  const [phone, setPhone] = useState("")
-  const [kw, setKw] = useState("")
+// const App = () => {
+//   const [name, setName] = useState("")
+//   const [phone, setPhone] = useState("")
+//   const [kw, setKw] = useState("")
 
-  const callback = useCallback(() => {
-    console.log("我是callback");
-  },[name])
+//   const callback = useCallback(() => {
+//     console.log("我是callback");
+//   },[name])
 
-  return (
-    <div className="App">
-      <input type="text" onChange={(e) => setName(e.target.value)} placeholder="请输入姓名" />
-      <input type="text" onChange={(e) => setPhone(e.target.value)} placeholder="请输入电话" />
-      <input type="text" onChange={(e) => setKw(e.target.value)} placeholder="请输入关键词" />
-      <Child callback={callback} />
-    </div>
-  )
-}
+//   return (
+//     <div className="App">
+//       <input type="text" onChange={(e) => setName(e.target.value)} placeholder="请输入姓名" />
+//       <input type="text" onChange={(e) => setPhone(e.target.value)} placeholder="请输入电话" />
+//       <input type="text" onChange={(e) => setKw(e.target.value)} placeholder="请输入关键词" />
+//       <Child callback={callback} />
+//     </div>
+//   )
+// }
 
-export default App;
+// export default App;
