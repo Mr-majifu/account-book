@@ -21,7 +21,7 @@ const Home = () => {
 
   // 获取账单的方法
   const getBillList = async () => {
-    const { data } = get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}`)
+    const { data } = await get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}`)
     // 下拉刷新，重置数据
     if (page == 1) {
       setList(data.list)
@@ -83,7 +83,10 @@ const Home = () => {
               }}
             >
             {
-              list.map((item, index) => <BillItem key={index} bill={item} />)
+              list.map((item, index) => <BillItem 
+                key={index} 
+                bill={item} 
+              />)
             }
            </Pull> : null
         }
