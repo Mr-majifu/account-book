@@ -1,11 +1,13 @@
 
 
 import s from "./style.module.less";
-import {Icon, Pull} from 'zarm'
-import {useEffect, useState} from 'react'
-import BillItem from '@/components/BillItem'
+import { Icon, Pull } from 'zarm'
+import { useEffect, useRef, useState } from 'react'
 import { get, REFRESH_STATE, LOAD_STATE } from '@/utils'
 import dayjs from "dayjs";
+import BillItem from '@/components/BillItem'
+import PopupType from '@/components/PopupType'
+
 
 const Home = () => {
   const [list, setList] = useState([])
@@ -14,14 +16,16 @@ const Home = () => {
   const [totalPage, setTotalPage] = useState(0)
   const [refreshing, setRefreshing] = useState(REFRESH_STATE.nomal) // 下拉刷新状态
   const [loading, setLoading] = useState(REFRESH_STATE.nomal) // 上拉加载状态
+  const [currentSelect, setCurrentSelect] = useState({}) // 当前筛选类型
+  const typeRef = useRef() // 账单类型 ref
 
   useEffect(() => {
     getBillList() // 初始化
-  }, [page])
+  }, [page, currentSelect])
 
   // 获取账单的方法
   const getBillList = async () => {
-    const { data } = await get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}`)
+    const { data } = await get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}&type_id=${currentSelect.id || 'all'}`)
     // 下拉刷新，重置数据
     if (page == 1) {
       setList(data.list)
@@ -44,10 +48,21 @@ const Home = () => {
   }
 
   const loadData = () => {
-    if(page < totalPage) {
+    if (page < totalPage) {
       setLoading(LOAD_STATE.loading)
       setPage(page + 1)
     }
+  }
+
+  // 类型弹窗
+  const toggle = () => {
+    typeRef.current && typeRef.current.show()
+  }
+
+  const select = (item) => {
+    setRefreshing(REFRESH_STATE.loading)
+    setPage(1)
+    setCurrentSelect(item)
   }
 
   return (
@@ -58,8 +73,8 @@ const Home = () => {
           <span className={s.income}></span>
         </div>
         <div className={s.typeWrap}>
-          <div className={s.left}>
-            <span className={s.title}>类型<Icon className={s.arrow} type="arrow-bottom" /></span>
+          <div className={s.left} onClick={toggle}>
+            <span className={s.title}>{currentSelect.name || '全部类型'}<Icon className={s.arrow} type="arrow-bottom" /></span>
           </div>
           <div className={s.right}>
             <span className={s.time}>2022-06<Icon className={s.arrow} type="arrow-bottom" /></span>
@@ -68,8 +83,8 @@ const Home = () => {
       </div>
       <div className={s.contentWrap}>
         {
-          list.length ? 
-            <Pull 
+          list.length ?
+            <Pull
               animationDuration={200}
               stayTime={400}
               refresh={{
@@ -82,15 +97,16 @@ const Home = () => {
                 handler: loadData
               }}
             >
-            {
-              list.map((item, index) => <BillItem 
-                key={index} 
-                bill={item} 
-              />)
-            }
-           </Pull> : null
+              {
+                list.map((item, index) => <BillItem
+                  key={index}
+                  bill={item}
+                />)
+              }
+            </Pull> : null
         }
       </div>
+      <PopupType ref={typeRef} onSelect={select} />
     </div>
   )
 }
